@@ -246,6 +246,27 @@ class KatalogProduk:
                 break
         return sorted(list(categories))
 
+    def search_by_brand(self, merek):
+        found_products = []
+        current_node = self.produk.head
+        while True:
+            if current_node.data.merek.lower() == merek.lower():
+                found_products.append(current_node.data)
+            current_node = current_node.next
+            if current_node == self.produk.head:
+                break
+        return found_products
+
+    def get_available_brands(self):
+        brands = set()
+        current_node = self.produk.head
+        while True:
+            brands.add(current_node.data.merek)
+            current_node = current_node.next
+            if current_node == self.produk.head:
+                break
+        return sorted(list(brands))
+
 def main():
     katalog = KatalogProduk()
 
@@ -291,7 +312,7 @@ def main():
         print("1. Tambah Produk")
         print("2. Lihat Produk")
         print("3. Urutkan Produk")
-        print("4. Pencarian Berdasarkan Kategori")
+        print("4. Pencarian Produk")
         print("5. Ubah Produk")
         print("6. Hapus Produk")
         print("7. Keluar")
@@ -300,10 +321,31 @@ def main():
 
         if pilihan == 1:
             nama_produk = input("Masukkan nama produk: ")
-            harga_produk = int(input("Masukkan harga produk: "))
-            stok_produk = int(input("Masukkan stok produk: "))
+            if not nama_produk:
+                print("Nama produk tidak boleh kosong!")
+                continue
+
+            harga_produk = input("Masukkan harga produk: ")
+            if not harga_produk.isdigit() or int(harga_produk) < 0:
+                print("Harga produk harus berupa angka positif!")
+                continue
+            harga_produk = int(harga_produk)
+
+            stok_produk = input("Masukkan stok produk: ")
+            if not stok_produk.isdigit() or int(stok_produk) < 0:
+                print("Stok produk harus berupa angka positif!")
+                continue
+            stok_produk = int(stok_produk)
+
             merek_produk = input("Masukkan merek produk: ")
+            if not merek_produk:
+                print("Merek produk tidak boleh kosong!")
+                continue
+
             kategori_produk = input("Masukkan kategori produk: ")
+            if not kategori_produk:
+                print("Kategori produk tidak boleh kosong!")
+                continue
 
             produk_baru = Produk(nama_produk, harga_produk, stok_produk, merek_produk, kategori_produk)
             katalog.create(produk_baru)
@@ -387,24 +429,58 @@ def main():
                     print("Pilihan tidak valid!")
 
         elif pilihan == 4:
-            available_categories = katalog.get_available_categories()
-            print("\n--- Kategori Tersedia ---")
-            for index, category in enumerate(available_categories, 1):
-                print(f"{index}. {category}")
-            kategori_cari = input("\nMasukkan nomor kategori yang ingin dicari: ")
-            if kategori_cari.isdigit() and 1 <= int(kategori_cari) <= len(available_categories):
-                kategori_cari = available_categories[int(kategori_cari) - 1]
-                found_products = katalog.produk.search_by_category(kategori_cari)
-                if found_products:
-                    print("\n--- Produk Ditemukan ---")
-                    table = PrettyTable(["Nama", "Harga (Rp)", "Stok", "Merek", "Kategori"])
-                    for product in found_products:
-                        table.add_row([product.nama, "{:,}".format(product.harga), product.stok, product.merek, product.kategori])
-                    print(table)
+            while True:
+                print("\n--- Pencarian Produk ---")
+                print("1. Pencarian Berdasarkan Merek")
+                print("2. Pencarian Berdasarkan Kategori")
+                print("3. Kembali ke Menu Utama")
+
+                pilihan_pencarian = int(input("Masukkan pilihan: "))
+
+                if pilihan_pencarian == 1:
+                    available_categories = katalog.get_available_categories()
+                    print("\n--- Kategori Tersedia ---")
+                    for index, category in enumerate(available_categories, 1):
+                        print(f"{index}. {category}")
+                    kategori_cari = input("\nMasukkan nomor kategori yang ingin dicari: ")
+                    if kategori_cari.isdigit() and 1 <= int(kategori_cari) <= len(available_categories):
+                        kategori_cari = available_categories[int(kategori_cari) - 1]
+                        found_products = katalog.produk.search_by_category(kategori_cari)
+                        if found_products:
+                            print("\n--- Produk Ditemukan ---")
+                            table = PrettyTable(["Nama", "Harga (Rp)", "Stok", "Merek", "Kategori"])
+                            for product in found_products:
+                                table.add_row([product.nama, "{:,}".format(product.harga), product.stok, product.merek, product.kategori])
+                            print(table)
+                        else:
+                            print(f"Tidak ditemukan produk dengan kategori '{kategori_cari}'.")
+                    else:
+                        print("Input tidak valid.")
+
+                elif pilihan_pencarian == 2:
+                    available_brands = katalog.get_available_brands()
+                    print("\n--- Merek Produk Tersedia ---")
+                    for index, brand in enumerate(available_brands, 1):
+                        print(f"{index}. {brand}")
+                    brand_choice = input("\nMasukkan nomor merek yang ingin dicari: ")
+                    if brand_choice.isdigit() and 1 <= int(brand_choice) <= len(available_brands):
+                        chosen_brand = available_brands[int(brand_choice) - 1]
+                        found_products = katalog.search_by_brand(chosen_brand)
+                        if found_products:
+                            print("\n--- Produk Ditemukan ---")
+                            table = PrettyTable(["Nama", "Harga (Rp)", "Stok", "Merek", "Kategori"])
+                            for product in found_products:
+                                table.add_row([product.nama, "{:,}".format(product.harga), product.stok, product.merek, product.kategori])
+                            print(table)
+                        else:
+                            print(f"Tidak ditemukan produk dari merek '{chosen_brand}'.")
+                    else:
+                        print("Input tidak valid.")
+
+                elif pilihan_pencarian == 3:
+                    break
                 else:
-                    print(f"Tidak ditemukan produk dengan kategori '{kategori_cari}'.")
-            else:
-                print("Input tidak valid.")
+                    print("Pilihan tidak valid. Masukkan '1' atau '2'.")
 
         elif pilihan == 5:
             nama_produk = input("Masukkan nama produk yang ingin diubah: ")
@@ -422,7 +498,7 @@ def main():
             nama_produk = input("Masukkan nama produk yang ingin dihapus: ")
             katalog.delete(nama_produk)
 
-        elif pilihan == 7:
+        elif pilihan == 8:
             print("Terima kasih!")
             break
 
