@@ -251,9 +251,11 @@ def main():
 
     produk_baru = [
         Produk("AOC 27G4 Gaming Monitor", 2678000, 5, "AOC", "Monitor Gaming"),
-        Produk("Intel Core i5 13400F", 3500000, 3, "INTEL", "Processor"),
+        Produk("INTEL Core i5 13400F", 3500000, 3, "INTEL", "Processor"),
         Produk("LENOVO Legion 9i 16IRX8", 76999000, 2, "LENOVO", "Laptop Gaming"),
         Produk("ASUS ROG Zephyrus G16 GU603ZU", 24199000, 4, "ASUS", "Laptop Gaming"),
+        Produk("MSI TITAN 18 HX RTX4090 i9 14900HX", 88499000, 2, "MSI", "Laptop Gaming"),
+        Produk("ACER PREDATOR HELIOS 16 PH16 RTX4080 i9 13900HX", 32999000, 1, "ACER", "Laptop Gaming"),
         Produk("NVIDIA GeForce RTX 3060", 4475000, 4, "GIGABYTE", "Vga Card"),
         Produk("AMD Ryzen 5 5600G", 2179000, 5, "AMD", "Processor"),
         Produk("MSI PRO B660M-A DDR4", 1800000, 7, "MSI", "Motherboard"),
@@ -262,6 +264,23 @@ def main():
         Produk("ASUS Vivobook Pro 14 OLED M3401Q1-KM043W", 13000000, 2, "ASUS", "Laptop"),
         Produk("AMD Ryzen 9 7950X", 14000000, 6, "AMD", "Processor"),
         Produk("NVIDIA GeForce RTX 4070 Ti", 10000000, 2, "COLORFUL", "Vga Card"),
+        Produk("RADEON RX 6900 XT", 7980000, 5, "GIGABYTE", "Vga Card"),
+        Produk("RADEON RX 6600 XT", 3654000, 3, "SAPPHIRE", "Vga Card"),
+        Produk("INTEL ARC A580", 3309000, 6, "ASROCK", "Vga Card"),
+        Produk("INTEL Core i3 13100F", 1885000, 4, "INTEL", "Processor"),
+        Produk("ADVAN Workplus AMD RYZEN 5 6600H 14'' FHD IPS", 6929000, 8, "ADVAN", "Laptop"),
+        Produk("LENOVO IdeaPad Slim 3i i3-1215U", 6579000, 8, "LENOVO", "Laptop"),
+        Produk("INTEL Core i9 13900KS", 12510000, 2, "INTEL", "Processor"),
+        Produk("LENOVO LOQ Gaming i5-12450HX", 11999000, 4, "LENOVO", "Laptop Gaming"),
+        Produk("KOORUI 24E4 Inch Gaming Monitor", 1565000, 4, "KOORUI", "Monitor Gaming"),
+        Produk("GIGABYTE G34WQC Gaming Monitor", 5239000, 3, "GIGABYTE", "Monitor Gaming"),
+        Produk("GIGABYTE B760 Aorus Elite AX", 3539000, 5, "GIGABYTE", "Motherboard"),
+        Produk("ASUS ROG STRIX B760-G Gaming WIFI", 3809000, 4, "ASUS", "Motherboard"),
+        Produk("PNY XLR8 Gaming DDR5 MAKO RGB 32GB (2x16GB)", 1830000, 4, "PNY", "RAM"),
+        Produk("TEAMGROUP Delta TUF Alliance 32GB 2x16GB DDR5 5600Mhz ", 1665000, 6, "TEAMGROUP", "RAM"),
+        Produk("TEAMGROUP MP33 M.2 2280 NVME 512GB", 625000, 7, "TEAMGROUP", "SSD"),
+        Produk("PNY CS2241 M.2 NVME 2TB", 2040000, 5, "PNY", "SSD"),
+        Produk("ADATA XPG SX8200 PRO M.2 NVME 512GB", 635000, 3, "ADATA", "SSD"),
     ]
 
     for produk in produk_baru:
