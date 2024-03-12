@@ -164,6 +164,28 @@ class LinkedListCircular:
             if current_node == self.head:
                 break
 
+    def search_by_name(self, nama):
+        found_products = []
+        current_node = self.head
+        while True:
+            if current_node.data.nama.lower() == nama.lower():
+                found_products.append(current_node.data)
+            current_node = current_node.next
+            if current_node == self.head:
+                break
+        return found_products
+
+    def search_by_category(self, kategori):
+        found_products = []
+        current_node = self.head
+        while True:
+            if current_node.data.kategori.lower() == kategori.lower():
+                found_products.append(current_node.data)
+            current_node = current_node.next
+            if current_node == self.head:
+                break
+        return found_products
+
 class Produk:
     def __init__(self, nama, harga, stok, merek, kategori):
         self.nama = nama
@@ -214,6 +236,16 @@ class KatalogProduk:
         if current_node is None:
             print(f"Produk dengan nama '{nama}' tidak ditemukan.")
 
+    def get_available_categories(self):
+        categories = set()
+        current_node = self.produk.head
+        while True:
+            categories.add(current_node.data.kategori)
+            current_node = current_node.next
+            if current_node == self.produk.head:
+                break
+        return sorted(list(categories))
+
 def main():
     katalog = KatalogProduk()
 
@@ -239,10 +271,11 @@ def main():
         print("\n--- Toko Komputer ---")
         print("1. Tambah Produk")
         print("2. Lihat Produk")
-        print("3. Ubah Produk")
-        print("4. Hapus Produk")
-        print("5. Urutkan Produk")
-        print("6. Keluar")
+        print("3. Urutkan Produk")
+        print("4. Pencarian Berdasarkan Kategori")
+        print("5. Ubah Produk")
+        print("6. Hapus Produk")
+        print("7. Keluar")
 
         pilihan = int(input("\nMasukkan pilihan: "))
 
@@ -260,22 +293,6 @@ def main():
             katalog.read()
 
         elif pilihan == 3:
-            nama_produk = input("Masukkan nama produk yang ingin diubah: ")
-
-            nama_baru = input("Masukkan nama baru: ")
-            harga_baru = int(input("Masukkan harga baru: "))
-            stok_baru = int(input("Masukkan stok baru: "))
-            merek_baru = input("Masukkan merek baru: ")
-            kategori_baru = input("Masukkan kategori baru: ")
-
-            produk_baru = Produk(nama_baru, harga_baru, stok_baru, merek_baru, kategori_baru)
-            katalog.update(nama_produk, produk_baru)
-
-        elif pilihan == 4:
-            nama_produk = input("Masukkan nama produk yang ingin dihapus: ")
-            katalog.delete(nama_produk)
-
-        elif pilihan == 5:
             while True:
                 print("\n--- Pilihan Urutkan Produk ---")
                 print("1. Berdasarkan Nama")
@@ -350,7 +367,43 @@ def main():
                 else:
                     print("Pilihan tidak valid!")
 
+        elif pilihan == 4:
+            available_categories = katalog.get_available_categories()
+            print("\n--- Kategori Tersedia ---")
+            for index, category in enumerate(available_categories, 1):
+                print(f"{index}. {category}")
+            kategori_cari = input("\nMasukkan nomor kategori yang ingin dicari: ")
+            if kategori_cari.isdigit() and 1 <= int(kategori_cari) <= len(available_categories):
+                kategori_cari = available_categories[int(kategori_cari) - 1]
+                found_products = katalog.produk.search_by_category(kategori_cari)
+                if found_products:
+                    print("\n--- Produk Ditemukan ---")
+                    table = PrettyTable(["Nama", "Harga (Rp)", "Stok", "Merek", "Kategori"])
+                    for product in found_products:
+                        table.add_row([product.nama, "{:,}".format(product.harga), product.stok, product.merek, product.kategori])
+                    print(table)
+                else:
+                    print(f"Tidak ditemukan produk dengan kategori '{kategori_cari}'.")
+            else:
+                print("Input tidak valid.")
+
+        elif pilihan == 5:
+            nama_produk = input("Masukkan nama produk yang ingin diubah: ")
+
+            nama_baru = input("Masukkan nama baru: ")
+            harga_baru = int(input("Masukkan harga baru: "))
+            stok_baru = int(input("Masukkan stok baru: "))
+            merek_baru = input("Masukkan merek baru: ")
+            kategori_baru = input("Masukkan kategori baru: ")
+
+            produk_baru = Produk(nama_baru, harga_baru, stok_baru, merek_baru, kategori_baru)
+            katalog.update(nama_produk, produk_baru)
+
         elif pilihan == 6:
+            nama_produk = input("Masukkan nama produk yang ingin dihapus: ")
+            katalog.delete(nama_produk)
+
+        elif pilihan == 7:
             print("Terima kasih!")
             break
 
