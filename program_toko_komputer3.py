@@ -15,20 +15,12 @@ def partition(list_produk, low, high, key, direction):
     i = low - 1
     pivot = list_produk[high].data.__getattribute__(key)
 
-    # Ubah pivot menjadi nilai yang sesuai untuk descending sorting
-    if direction == "descending":
-        if isinstance(pivot, (int, float)):
-            pivot = -pivot
-        else:
-            pivot = pivot[::-1]
-
     for j in range(low, high):
         current_element = list_produk[j].data.__getattribute__(key)
-        # Sesuaikan logika perbandingan untuk ascending dan descending sorting
         if (direction == "ascending" and current_element < pivot) or (direction == "descending" and current_element > pivot):
             i += 1
             list_produk[i], list_produk[j] = list_produk[j], list_produk[i]
-    
+
     list_produk[i + 1], list_produk[high] = list_produk[high], list_produk[i + 1]
     return i + 1
 
@@ -284,7 +276,6 @@ def main():
             katalog.delete(nama_produk)
 
         elif pilihan == 5:
-            # Menampilkan sub-menu untuk memilih kriteria sort
             while True:
                 print("\n--- Pilihan Urutkan Produk ---")
                 print("1. Berdasarkan Nama")
@@ -295,7 +286,6 @@ def main():
                 pilihan_sort = int(input("Masukkan pilihan: "))
 
                 if pilihan_sort == 1:
-                    # Urutkan berdasarkan nama
                     while True:
                         print("\n--- Urutkan Berdasarkan Nama ---")
                         print("1. Ascending (A-Z)")
@@ -316,7 +306,6 @@ def main():
                             print("Pilihan tidak valid. Masukkan '1' atau '2'.")
 
                 elif pilihan_sort == 2:
-                    # Urutkan berdasarkan kategori
                     while True:
                         print("\n--- Urutkan Berdasarkan Kategori ---")
                         print("1. Ascending (A-Z)")
@@ -337,7 +326,6 @@ def main():
                             print("Pilihan tidak valid. Masukkan '1' atau '2'.")
 
                 elif pilihan_sort == 3:
-                    # Urutkan berdasarkan harga
                     while True:
                         print("\n--- Urutkan Berdasarkan Harga ---")
                         print("1. Ascending (Termurah)")
